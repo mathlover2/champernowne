@@ -1,18 +1,18 @@
+module Champernowne
+       where
+
 import Math.NumberTheory.Logarithms (integerLogBase)
 
 champernowneDigit base pos
   = if base > pos then pos
-    else findPlaceIn base placeInNumber numberContaining
-  where numberContaining = ((x-1)`div`(i+1))+base^i
-        placeInNumber    = (-x)`mod`(i+1)
-        x = pos - l
+    else ((x-1)`div`(base^((-x)`mod`(i+1))*(i+1))+base^((x-1)`mod`(i+1)))
+         `mod`base
+  where x = pos - l
         l = f (i-1)
         i = binaryAdvanceDownFrom (<=pos) f
             (fromIntegral (integerLogBase base pos)) + 1
         f n = let bnn = base^(n+1)
               in -1 + bnn*(n+1) + (base-bnn)`div`(base-1)
-
-findPlaceIn base place n = (n `div` (base ^ place)) `mod` base
 
 binaryAdvanceDownFrom p f n0
   = let f' n = f (n0-n) in n0 - (binaryAdvance (not . p) f')
