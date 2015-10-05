@@ -5,9 +5,10 @@ import Math.NumberTheory.Logarithms (integerLogBase)
 
 champernowneDigit base pos
   = if base > pos then pos
-    else ((x-1)`div`(base^((-x)`mod`(i+1))*(i+1))+base^((x-1)`mod`(i+1)))
+    else ((x-1)`div`(base^((-x)`mod`(i+1))*(i+1)) + y)
          `mod`base
   where x = pos - l
+        y = if (pos - l) `mod` (i + 1) == 1 then 1 else 0
         l = f (i-1)
         i = binaryAdvanceDownFrom (<=pos) f
             (fromIntegral (integerLogBase base pos)) + 1
