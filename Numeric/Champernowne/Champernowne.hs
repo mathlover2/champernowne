@@ -19,4 +19,7 @@ champernowneDigit base pos
 binaryAdvanceDownFrom p f n0
   = let f' n = f (n0-n) in n0 - (binaryAdvance (not . p) f')
 
-
+champernowneConstant :: (Fractional a) => Integer -> Integer -> a
+champernowneConstant base prec
+  = let num = foldl1 (\x y -> base*x + y) $ map (champernowneDigit base) [0..prec]
+    in  (fromIntegral num) / (fromIntegral (base ^ prec))
